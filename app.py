@@ -85,23 +85,23 @@ def compute_hourly_profile(df, hour_cols):
 page = st.sidebar.radio(
     "Navigation",
     [
-        "🏠 Home",
-        "🚗 Traffic Explorer",
-        "🎯 Neutrality Explorer",
-        "🏫 School Holiday Impact",
-        "🤖 Day Type Explorer",
-        "📈 Traffic Forecast"
+        "Home",
+        "Traffic Explorer",
+        "Neutrality Explorer",
+        "School Holiday Impact",
+        "Day Type Explorer",
+        "Traffic Forecast"
     ]
 )
 
-with st.sidebar.expander("📖 Dashboard Guide"):
+with st.sidebar.expander("Dashboard Guide"):
     st.markdown(
         """
-### 🚗 Traffic Explorer — What happens here?
-### 🎯 Neutrality Explorer — Was this day normal?
-### 🏫 School Holiday Impact — How much do holidays affect traffic?
-### 🤖 Day Type Explorer — What type of day was this?
-### 📈 Traffic Forecast — What traffic do we expect?
+### Traffic Explorer — What happens here?
+### Neutrality Explorer — Was this day normal?
+### School Holiday Impact — How much do holidays affect traffic?
+### Day Type Explorer — What type of day was this?
+### Traffic Forecast — What traffic do we expect?
 """
     )
 
@@ -109,9 +109,9 @@ with st.sidebar.expander("📖 Dashboard Guide"):
 # HOME PAGE
 # --------------------------------------------------
 
-if page == "🏠 Home":
+if page == "Home":
 
-    st.title("🚗 North East Traffic Analytics Dashboard")
+    st.title("North East Traffic Analytics Dashboard")
 
     st.markdown(
         """
@@ -135,7 +135,7 @@ This dashboard was developed as part of the
 # PAGE 1: TRAFFIC EXPLORER
 # --------------------------------------------------
 
-elif page == "🚗 Traffic Explorer":
+elif page == "Traffic Explorer":
 
     st.title("Traffic Explorer")
     st.info("Explore how traffic normally behaves at a selected site.")
@@ -154,7 +154,7 @@ elif page == "🚗 Traffic Explorer":
     ]
 
     if len(filtered) > 20000:
-        st.warning("Large date range detected. Auto‑downsampling applied.")
+        st.warning("Large date range detected. Auto-downsampling applied.")
         filtered = downsample(filtered)
 
     avg_daily_traffic = filtered["Total"].mean()
@@ -174,7 +174,7 @@ elif page == "🚗 Traffic Explorer":
         with col2: st.write(f"**Road Class:** {site_meta.get('RoadClass', 'N/A')}")
         with col3: st.write(f"**Behavioural Period:** {site_meta.get('BehaviouralPeriod', 'N/A')}")
 
-    tab1, tab2 = st.tabs(["📈 Historical Trend", "⏱ Average Hourly Profile"])
+    tab1, tab2 = st.tabs(["Historical Trend", "Average Hourly Profile"])
 
     with tab1:
         fig = px.line(downsample(filtered), x="Date", y="Total", title="Traffic Through Time")
@@ -194,7 +194,7 @@ elif page == "🚗 Traffic Explorer":
 # PAGE 2: NEUTRALITY EXPLORER
 # --------------------------------------------------
 
-elif page == "🎯 Neutrality Explorer":
+elif page == "Neutrality Explorer":
 
     st.title("Neutrality Explorer")
     st.info("Was this day normal?")
@@ -261,7 +261,7 @@ elif page == "🎯 Neutrality Explorer":
 # PAGE 3: SCHOOL HOLIDAY IMPACT
 # --------------------------------------------------
 
-elif page == "🏫 School Holiday Impact":
+elif page == "School Holiday Impact":
 
     st.title("School Holiday Impact")
     st.info("How much do holidays reduce traffic?")
@@ -294,7 +294,7 @@ elif page == "🏫 School Holiday Impact":
 # PAGE 4: DAY TYPE EXPLORER
 # --------------------------------------------------
 
-elif page == "🤖 Day Type Explorer":
+elif page == "Day Type Explorer":
 
     st.title("Day Type Explorer")
     st.info("What type of day was this?")
@@ -339,7 +339,7 @@ elif page == "🤖 Day Type Explorer":
 # PAGE 5: TRAFFIC FORECAST
 # --------------------------------------------------
 
-elif page == "📈 Traffic Forecast":
+elif page == "Traffic Forecast":
 
     st.title("Traffic Forecast")
     st.info(
@@ -376,16 +376,13 @@ Forecasts are generated using the LightGBM model.
 
     if len(day_forecast):
 
-        # Expected daily traffic
         expected_daily = float(day_forecast["PredictedTraffic"].sum())
 
-        # Simple confidence metric from band width
         band_width = (day_forecast["UpperBand"] - day_forecast["LowerBand"]).mean()
         confidence = "High" if band_width < expected_daily * 0.05 else "Medium" if band_width < expected_daily * 0.1 else "Low"
 
-        # If you have predicted day type / neutrality in forecasts, plug them here
-        predicted_day_type = "Commuter Traffic"  # placeholder label
-        forecast_neutrality = 87  # placeholder score
+        predicted_day_type = "Commuter Traffic"
+        forecast_neutrality = 87
 
         st.subheader("Forecast Summary")
         col1, col2, col3 = st.columns(3)
@@ -398,7 +395,6 @@ Forecasts are generated using the LightGBM model.
 
         st.metric("Forecast Neutrality", forecast_neutrality)
 
-        # Hourly forecast chart
         st.subheader("Hourly Forecast (00:00–23:00)")
 
         fig = go.Figure()
@@ -421,7 +417,6 @@ Forecasts are generated using the LightGBM model.
         ))
         fig.update_layout(title=f"Hourly Forecast — Site {site}, {forecast_date}")
         st.plotly_chart(fig, use_container_width=True)
+
     else:
         st.info("No forecast data available for that site and date.")
-
-
