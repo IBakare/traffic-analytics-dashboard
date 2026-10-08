@@ -11,7 +11,7 @@ import datetime
 
 st.set_page_config(
     page_title="Traffic Analytics Dashboard",
-    page_icon="🚗",
+    page_icon="",
     layout="wide"
 )
 
@@ -85,23 +85,23 @@ def compute_hourly_profile(df, hour_cols):
 page = st.sidebar.radio(
     "Navigation",
     [
-        "🏠 Home",
-        "🚗 Traffic Explorer",
-        "🎯 Neutrality Explorer",
-        "🏫 School Holiday Impact",
-        "🤖 Day Type Explorer",
-        "📈 Traffic Forecast"
+        "Home",
+        "Traffic Explorer",
+        "Neutrality Explorer",
+        "School Holiday Impact",
+        "Day Type Explorer",
+        "Traffic Forecast"
     ]
 )
 
-with st.sidebar.expander("📖 Dashboard Guide"):
+with st.sidebar.expander(" Dashboard Guide"):
     st.markdown(
         """
-### 🚗 Traffic Explorer — What happens here?
-### 🎯 Neutrality Explorer — Was this day normal?
-### 🏫 School Holiday Impact — How much do holidays affect traffic?
-### 🤖 Day Type Explorer — What type of day was this?
-### 📈 Traffic Forecast — What traffic do we expect?
+### Traffic Explorer — What happens here?
+### Neutrality Explorer — Was this day normal?
+### School Holiday Impact — How much do holidays affect traffic?
+### Day Type Explorer — What type of day was this?
+### Traffic Forecast — What traffic do we expect?
 """
     )
 
@@ -109,9 +109,9 @@ with st.sidebar.expander("📖 Dashboard Guide"):
 # HOME PAGE
 # --------------------------------------------------
 
-if page == "🏠 Home":
+if page == "Home":
 
-    st.title("🚗 North East Traffic Analytics Dashboard")
+    st.title("North East Traffic Analytics Dashboard")
 
     st.markdown(
         """
@@ -135,7 +135,7 @@ This dashboard was developed as part of the
 # PAGE 1: TRAFFIC EXPLORER
 # --------------------------------------------------
 
-elif page == "🚗 Traffic Explorer":
+elif page == "Traffic Explorer":
 
     st.title("Traffic Explorer")
     st.info("Explore how traffic normally behaves at a selected site.")
@@ -194,7 +194,7 @@ elif page == "🚗 Traffic Explorer":
 # PAGE 2: NEUTRALITY EXPLORER
 # --------------------------------------------------
 
-elif page == "🎯 Neutrality Explorer":
+elif page == "Neutrality Explorer":
 
     st.title("Neutrality Explorer")
     st.info("Was this day normal?")
@@ -261,7 +261,7 @@ elif page == "🎯 Neutrality Explorer":
 # PAGE 3: SCHOOL HOLIDAY IMPACT
 # --------------------------------------------------
 
-elif page == "🏫 School Holiday Impact":
+elif page == "School Holiday Impact":
 
     st.title("School Holiday Impact")
     st.info("How much do holidays reduce traffic?")
@@ -294,7 +294,7 @@ elif page == "🏫 School Holiday Impact":
 # PAGE 4: DAY TYPE EXPLORER
 # --------------------------------------------------
 
-elif page == "🤖 Day Type Explorer":
+elif page == "Day Type Explorer":
 
     st.title("Day Type Explorer")
     st.info("What type of day was this?")
